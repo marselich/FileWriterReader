@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             TextView outputText = (TextView) findViewById(R.id.output_text);
-            Button openText = (Button) findViewById(R.id.open_text);
 
             fis = openFileInput(FILE_NAME);
             byte[] bytes = new byte[fis.available()];
@@ -68,11 +67,14 @@ public class MainActivity extends AppCompatActivity {
             String text = new String(bytes);
 
             outputText.setText(text);
+            Toast.makeText(this, "Файл успешно добавлен", Toast.LENGTH_SHORT).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         } finally {
             try {
                 if(fis != null) {
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 
