@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
     private final static String FILE_NAME = "content.txt";
@@ -52,6 +54,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // открытие файла
+    public void openText(View view) {
+        FileInputStream fis = null;
 
+        try {
+            TextView outputText = (TextView) findViewById(R.id.output_text);
+            Button openText = (Button) findViewById(R.id.open_text);
+
+            fis = openFileInput(FILE_NAME);
+            byte[] bytes = new byte[fis.available()];
+            fis.read(bytes);
+            String text = new String(bytes);
+
+            outputText.setText(text);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(fis != null) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
 
 }
